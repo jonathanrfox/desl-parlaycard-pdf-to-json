@@ -1,5 +1,7 @@
 /*
 !.gitignore
 !build.gradle
+!run.sh
+!test.sh
 !/src*
 /src/**/*~
