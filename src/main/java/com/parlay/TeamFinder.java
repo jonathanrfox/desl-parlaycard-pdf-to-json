@@ -1,57 +1,70 @@
 package com.parlay;
 
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.text.similarity.JaroWinklerDistance;
 
 
 public class TeamFinder {
 
     private static final JaroWinklerDistance distance = new JaroWinklerDistance();
-    private static final String[] teams = {
-        "PANTHERS",
-        "BRONCOS",
-        "FALCONS",
-        "BUCCANEERS",
-        "VIKINGS",
-        "TITANS",
-        "EAGLES",
-        "BROWNS",
-        "BENGALS",
-        "JETS",
-        "SAINTS",
-        "RAIDERS",
-        "CHIEFS",
-        "CHARGERS",
-        "RAVENS",
-        "BILLS",
-        "TEXANS",
-        "BEARS",
-        "PACKERS",
-        "JAGUARS",
-        "SEAHAWKS",
-        "DOLPHINS",
-        "COWBOYS",
-        "GIANTS",
-        "COLTS",
-        "LIONS",
-        "CARDINALS",
-        "PATRIOTS",
-        "STEELERS",
-        "REDSKINS",
-        "RAMS",
-        "49ERS"
-    };
+    private static List<String> teams = new ArrayList<>(Arrays.asList(new String[]
+        {
+            "PANTHERS",
+            "BRONCOS",
+            "FALCONS",
+            "BUCCANEERS",
+            "VIKINGS",
+            "TITANS",
+            "EAGLES",
+            "BROWNS",
+            "BENGALS",
+            "JETS",
+            "SAINTS",
+            "RAIDERS",
+            "CHIEFS",
+            "CHARGERS",
+            "RAVENS",
+            "BILLS",
+            "TEXANS",
+            "BEARS",
+            "PACKERS",
+            "JAGUARS",
+            "SEAHAWKS",
+            "DOLPHINS",
+            "COWBOYS",
+            "GIANTS",
+            "COLTS",
+            "LIONS",
+            "CARDINALS",
+            "PATRIOTS",
+            "STEELERS",
+            "REDSKINS",
+            "RAMS",
+            "49ERS"
+        }));
 
     public static String find(String s) {
         double maxScore = 0.0;
-        String bestMatch = null;
+        int bestMatchIdx = 0;
 
-        for (String team : teams) {
-            double score = distance.apply(team, s);
+        // find maxiumum score
+        for (int i=0; i < teams.size(); i++) {
+            double score = distance.apply(teams.get(i), s);
             if (score > maxScore) {
                 maxScore = score;
-                bestMatch = team;
+                bestMatchIdx = i;
             }
         }
+        // set arbitrary threshold
+        if (maxScore < 0.65)
+            return null;
+
+        // pop found element off the list to reduce search space and prevent dupes
+        String bestMatch = teams.get(bestMatchIdx);
+        teams.remove(bestMatchIdx);
         return bestMatch;
     }
 }

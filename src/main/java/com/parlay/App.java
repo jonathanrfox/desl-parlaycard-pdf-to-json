@@ -76,6 +76,10 @@ public class App {
         // get the document text
         String text = getPdfText(ns.get("pdf"));
 
+        // System.out.println(ns.get("pdf"));
+        // System.out.println(text);
+        // System.exit(1);
+
         // transform text into a condensed list
         List<String> lines = ParlayUtils.clean(text);
 

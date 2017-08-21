@@ -23,7 +23,22 @@ public class Game {
         this.parlayType = null;
     }
 
+    public Game(String over, String under) {
+        this();
+        this.over = over;
+        this.under = under;
+    }
+
+    public Game(String lhTeam, String lhSpread, String rhTeam, String rhSpread) {
+        this();
+        this.lhTeam = lhTeam;
+        this.lhSpread = lhSpread;
+        this.rhTeam = rhTeam;
+        this.rhSpread = rhSpread;
+    }
+
     public Game(String lhTeam, String lhSpread, String rhTeam, String rhSpread, String over, String under) {
+        this();
         this.lhTeam = lhTeam;
         this.lhSpread = lhSpread;
         this.rhTeam = rhTeam;
@@ -62,5 +77,17 @@ public class Game {
 
     public void setParlayType(String parlayType) {
         this.parlayType = parlayType;
+    }
+
+    public boolean equals(Game other) {
+        return
+            (this.lhTeam == other.lhTeam || this.lhTeam.equals(other.lhTeam)) &&
+            (this.lhSpread == other.lhSpread || this.lhSpread.equals(other.lhSpread)) &&
+            (this.rhTeam == other.rhTeam || this.rhTeam.equals(other.rhTeam)) &&
+            (this.rhSpread == other.rhSpread || this.rhSpread.equals(other.rhSpread)) &&
+            (this.over == other.over || this.over.equals(other.over)) &&
+            (this.under == other.under || this.under.equals(other.under)) &&
+            (this.parlayType == other.parlayType || this.parlayType.equals(other.parlayType)) &&
+            this.week == other.week;
     }
 }
