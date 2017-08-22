@@ -46,21 +46,26 @@ public class TeamFinder {
             "49ERS"
         }));
 
-    public static String find(String s) {
+    public static String find(String team) {
         double maxScore = 0.0;
         int bestMatchIdx = 0;
 
         // find maxiumum score
-        for (int i=0; i < teams.size(); i++) {
-            double score = distance.apply(teams.get(i), s);
+        for (int i = 0; i < teams.size(); i++) {
+            double score = distance.apply(teams.get(i), team);
             if (score > maxScore) {
                 maxScore = score;
                 bestMatchIdx = i;
             }
         }
+
         // set arbitrary threshold
-        if (maxScore < 0.65)
+        if (maxScore < 0.65) {
+            // log the actual vs bestMatch: warning
             return null;
+        }
+
+        // log the actual vs bestMatch: success
 
         // pop found element off the list to reduce search space and prevent dupes
         String bestMatch = teams.get(bestMatchIdx);

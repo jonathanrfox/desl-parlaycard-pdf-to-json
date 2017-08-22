@@ -2,6 +2,7 @@ package com.parlay;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -14,15 +15,16 @@ import net.sourceforge.argparse4j.inf.Namespace;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 
-import com.parlay.ParlayCards;
 import com.parlay.ParlayCard;
+import com.parlay.ParlayCards;
 import com.parlay.ParlayUtils;
 
 
 public class App {
 
-    public static String getPdfText(String pdfPath) {
+    public static String getPdfText(String pdfPath) throws IOException {
         File file = new File(pdfPath);
         PDDocument document = null;
         PDFTextStripper stripper = null;
@@ -31,9 +33,10 @@ public class App {
         try {
             document = PDDocument.load(file);
             stripper = new PDFTextStripper();
-            text = stripper.getText(document);
+            stripper.setEndPage(1);
+            text =  stripper.getText(document);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException("Could not load file and strip text.", e);
         } finally {
             try {
                 if (document != null)
@@ -64,6 +67,7 @@ public class App {
             .type(Integer.class)
             .choices(Arguments.range(1, 18));
 
+        // parse the arguments
         Namespace ns = null;
 
         try {
@@ -74,11 +78,17 @@ public class App {
         }
 
         // get the document text
-        String text = getPdfText(ns.get("pdf"));
+        String text = null;
 
-        // System.out.println(ns.get("pdf"));
+        try {
+            text = getPdfText(ns.get("pdf"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        // log the text from pdf
         // System.out.println(text);
-        // System.exit(1);
 
         // transform text into a condensed list
         List<String> lines = ParlayUtils.clean(text);
@@ -89,7 +99,7 @@ public class App {
         // set the week
         parlay.setWeek(ns.get("week"));
 
-        // // fill arraylist with games
+        // consume list into new list of Game objects
         parlay.consume(lines);
 
         // // output the result as a json object to console

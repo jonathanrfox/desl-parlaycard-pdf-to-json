@@ -85,22 +85,4 @@ public class ParlayUtils {
         return parseSpread(line);
     }
 
-    // public static void parseTeamsAndSpreads(Game game, String line) {
-    //     String[] split = line.split(TEAM_SPLIT_PATTERN, 2);
-    //     String lhs = split[0], rhs = split[1];
-
-    //     game.setLhTeam( findMatch(lhs, TEAM_PATTERN) );
-    //     game.setLhSpread( findMatch(lhs, SPREAD_PATTERN) );
-
-    //     game.setRhTeam( findMatch(rhs, TEAM_PATTERN) );
-    //     game.setRhSpread( findMatch(rhs, SPREAD_PATTERN) );
-    // }
-
-    // public static void parseOverUnder(Game game, String line) {
-    //     String[] split = line.split(OVER_UNDER_SPLIT_PATTERN, 2);
-    //     String lhs = split[0], rhs = split[1];
-
-    //     game.setOver( findMatch(lhs, SPREAD_PATTERN) );
-    //     game.setUnder( findMatch(rhs, SPREAD_PATTERN) );
-    // }
 }

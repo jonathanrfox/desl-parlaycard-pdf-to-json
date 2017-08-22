@@ -15,7 +15,7 @@ public class RegularCard extends ParlayCard {
     }
 
     public void consume(List<String> lines) {
-        for (int i=0; i < lines.size() - 1; i += 2) {
+        for (int i = 0; i < lines.size() - 1; i += 2) {
             SplitString top = new SplitString(lines.get(i), ':', 1);
             SplitString bottom = new SplitString(lines.get(i + 1), '½', 2);
 
@@ -28,7 +28,7 @@ public class RegularCard extends ParlayCard {
             String over = ParlayUtils.parseOver(bottom.lhs);
             String under = ParlayUtils.parseUnder(bottom.rhs);
 
-            // System.out.println("GAME");
+            // log data
             // System.out.println(top.lhs);
             // System.out.println(top.rhs);
 
@@ -44,7 +44,6 @@ public class RegularCard extends ParlayCard {
             // System.out.println(over);
             // System.out.println(under);
 
-            // System.out.println();
             addGame(new Game(lhTeam, lhSpread, rhTeam, rhSpread, over, under));
         }
     }

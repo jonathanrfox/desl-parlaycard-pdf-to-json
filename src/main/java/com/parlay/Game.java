@@ -2,15 +2,15 @@ package com.parlay;
 
 
 public class Game {
+
     private String lhTeam;
     private String lhSpread;
     private String rhTeam;
     private String rhSpread;
     private String over;
     private String under;
-
-    private int week;
     private String parlayType;
+    private int week;
 
     public Game() {
         this.lhTeam = null;
@@ -19,14 +19,8 @@ public class Game {
         this.rhSpread = null;
         this.over = null;
         this.under = null;
-        this.week = -1;
         this.parlayType = null;
-    }
-
-    public Game(String over, String under) {
-        this();
-        this.over = over;
-        this.under = under;
+        this.week = -1;
     }
 
     public Game(String lhTeam, String lhSpread, String rhTeam, String rhSpread) {

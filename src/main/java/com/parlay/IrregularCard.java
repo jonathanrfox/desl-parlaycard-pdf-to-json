@@ -24,8 +24,7 @@ class IrregularCard extends ParlayCard {
             String rhTeam = ParlayUtils.parseTeam(line.rhs);
             String rhSpread = ParlayUtils.parseSpread(line.rhs);
 
-            // System.out.println("GAME");
-
+            // log data
             // System.out.println(line.lhs);
             // System.out.println(line.rhs);
 
@@ -35,7 +34,6 @@ class IrregularCard extends ParlayCard {
             // System.out.println(rhTeam);
             // System.out.println(rhSpread);
 
-            // System.out.println();
             addGame(new Game(lhTeam, lhSpread, rhTeam, rhSpread));
         }
     }
