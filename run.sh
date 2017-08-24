@@ -1,1 +1,1 @@
-./gradlew build && ./gradlew run -Pargs="${1}"
+./gradlew build && ./gradlew -Djava.util.logging.config.file=logging.properties run -Pargs="${1}"

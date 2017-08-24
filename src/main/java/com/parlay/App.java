@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
@@ -24,6 +26,35 @@ import com.parlay.ParlayUtils;
 
 public class App {
 
+    private static Logger LOGGER = Logger.getLogger(App.class.getName());
+    private static Namespace namespace;
+
+    private static void initArgParser(String[] args) {
+        ArgumentParser parser = ArgumentParsers
+            .newArgumentParser("ParlayParser")
+            .defaultHelp(true)
+            .description("Parses parlay pdfs into json.");
+
+        parser.addArgument("pdf")
+            .help("Pdf to parse");
+
+        parser.addArgument("pdftype")
+            .help("Type of parlay")
+            .choices("std", "tsr", "sup", "rev");
+
+        parser.addArgument("week")
+            .help("Week of play")
+            .type(Integer.class)
+            .choices(Arguments.range(1, 18));
+
+        try {
+            namespace = parser.parseArgs(args);
+        } catch (ArgumentParserException e) {
+            LOGGER.log(Level.SEVERE, "Couldn't parse args", e);
+            System.exit(1);
+        }
+    }
+
     public static String getPdfText(String pdfPath) throws IOException {
         File file = new File(pdfPath);
         PDDocument document = null;
@@ -42,7 +73,7 @@ public class App {
                 if (document != null)
                     document.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.WARNING, "Could not close document", e);
             }
         }
 
@@ -50,59 +81,30 @@ public class App {
     }
 
     public static void main(String[] args) {
-        ArgumentParser parser = ArgumentParsers
-            .newArgumentParser("ParlayParser")
-            .defaultHelp(true)
-            .description("Parses parlay pdfs into json.");
+        initArgParser(args);
 
-        parser.addArgument("pdf")
-            .help("Pdf to parse");
+        LOGGER.info("Arguments supplied:\n"
+            + "\tpdf: " + namespace.get("pdf") + "\n"
+            + "\tpdfType: " + namespace.get("pdftype") + "\n"
+            + "\tweek: " + namespace.get("week"));
 
-        parser.addArgument("pdftype")
-            .help("Type of parlay")
-            .choices("std", "tsr", "sup", "rev");
-
-        parser.addArgument("week")
-            .help("Week of play")
-            .type(Integer.class)
-            .choices(Arguments.range(1, 18));
-
-        // parse the arguments
-        Namespace ns = null;
-
-        try {
-            ns = parser.parseArgs(args);
-        } catch (ArgumentParserException e) {
-            parser.handleError(e);
-            System.exit(1);
-        }
-
-        // get the document text
         String text = null;
 
         try {
-            text = getPdfText(ns.get("pdf"));
+            text = getPdfText(namespace.get("pdf"));
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Couldn't get pdf text", e);
             System.exit(1);
         }
 
-        // log the text from pdf
-        // System.out.println(text);
+        LOGGER.info("Text returned from pdf:\n" + text);
 
-        // transform text into a condensed list
         List<String> lines = ParlayUtils.clean(text);
-
-        // factory method for creating a parlay
-        ParlayCard parlay = ParlayCards.get(ns.get("pdftype"));
-
-        // set the week
-        parlay.setWeek(ns.get("week"));
-
-        // consume list into new list of Game objects
+        ParlayCard parlay = ParlayCards.get(namespace.get("pdftype"));
+        parlay.setWeek(namespace.get("week"));
         parlay.consume(lines);
 
-        // // output the result as a json object to console
+        // output the result as a json object to console
         Gson gson = new Gson();
         String json = gson.toJson(parlay.getGames());
         System.out.println(json);

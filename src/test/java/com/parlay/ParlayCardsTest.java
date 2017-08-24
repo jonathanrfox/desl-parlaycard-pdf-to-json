@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import java.lang.Class;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,50 +17,26 @@ import com.parlay.IrregularCard;
 @RunWith(Parameterized.class)
 public class ParlayCardsTest {
 
-    private String parlayType;
-    private ParlayCard cardType;
+    private Class actualClass;
+    private Class expectedClass;
 
-    public ParlayCardsTest(String parlayType, ParlayCard cardType) {
-        this.parlayType = parlayType;
-        this.cardType = cardType;
+    public ParlayCardsTest(String parlayType, Class expectedClass) {
+        this.actualClass = ParlayCards.get(parlayType).getClass();
+        this.expectedClass = expectedClass;
     }
 
     @Parameterized.Parameters
     public static List<Object[]> testData() {
         return Arrays.asList(new Object[][]{
-                {"std", new RegularCard("std")},
-                {"tsr", new RegularCard("tsr")},
-                {"sup", new RegularCard("sup")},
-                {"rev", new IrregularCard("rev")}
+                {"std", RegularCard.class},
+                {"tsr", RegularCard.class},
+                {"sup", RegularCard.class},
+                {"rev", IrregularCard.class}
             });
     }
 
-    @Test void shouldReturnCorrectInstance() {
-        ParlayCard parlay = ParlayCards.get(this.parlayType);
-        assertEquals(parlay.getClass(), this.cardType.getClass());
+    @Test
+    public void shouldReturnCorrectInstance() {
+        assertEquals(this.actualClass, this.expectedClass);
     }
-
-    // @Test
-    // public void shouldReturnInstanceOfRegularCardForStd() {
-    //     ParlayCard parlay = ParlayCards.get("std");
-    //     assertTrue(parlay instanceof RegularCard);
-    // }
-
-    // @Test
-    // public void shouldReturnInstanceOfRegularCardForTsr() {
-    //     ParlayCard parlay = ParlayCards.get("tsr");
-    //     assertTrue(parlay instanceof RegularCard);
-    // }
-
-    // @Test
-    // public void shouldReturnInstanceOfRegularCardForSup() {
-    //     ParlayCard parlay = ParlayCards.get("sup");
-    //     assertTrue(parlay instanceof RegularCard);
-    // }
-
-    // @Test
-    // public void shouldReturnInstanceOfIrregularCardForRev() {
-    //     ParlayCard parlay = ParlayCards.get("rev");
-    //     assertTrue(parlay instanceof IrregularCard);
-    // }
 }

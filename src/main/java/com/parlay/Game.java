@@ -73,15 +73,30 @@ public class Game {
         this.parlayType = parlayType;
     }
 
+    public String toString() {
+        return ""
+            + this.lhTeam + ", "
+            + this.lhSpread + ", "
+            + this.rhTeam + ", "
+            + this.rhSpread + ", "
+            + this.over + ", "
+            + this.under + ", "
+            + this.week;
+    }
+
+    private boolean stringsEqual(String s, String o) {
+        return s == o || s.equals(o);
+    }
+
     public boolean equals(Game other) {
         return
-            (this.lhTeam == other.lhTeam || this.lhTeam.equals(other.lhTeam)) &&
-            (this.lhSpread == other.lhSpread || this.lhSpread.equals(other.lhSpread)) &&
-            (this.rhTeam == other.rhTeam || this.rhTeam.equals(other.rhTeam)) &&
-            (this.rhSpread == other.rhSpread || this.rhSpread.equals(other.rhSpread)) &&
-            (this.over == other.over || this.over.equals(other.over)) &&
-            (this.under == other.under || this.under.equals(other.under)) &&
-            (this.parlayType == other.parlayType || this.parlayType.equals(other.parlayType)) &&
+            stringEquals(this.lhTeam, other.lhTeam) &&
+            stringEquals(this.lhSpread, other.lhSpread) &&
+            stringEquals(this.rhTeam, other.rhTeam) &&
+            stringEquals(this.rhSpread, other.rhSpread) &&
+            stringEquals(this.over, other.over) &&
+            stringEquals(this.under, other.under) &&
+            stringEquals(this.parlayType, other.parlayType) &&
             this.week == other.week;
     }
 }
