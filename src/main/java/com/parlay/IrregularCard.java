@@ -21,7 +21,7 @@ class IrregularCard extends ParlayCard {
         for (int i = 0; i < lines.size(); i++) {
             LOGGER.info("Line[" + i + "]: " + lines.get(i));
 
-            Map<String, String> line = splitLine(lines.get(i), ':');
+            Map<String, String> line = ParlayUtils.splitLine(lines.get(i), ':');
             Game game = new Game(ParlayUtils.parseTeam(line.get("home")),
                                  ParlayUtils.parseSpread(line.get("home")),
                                  ParlayUtils.parseTeam(line.get("away")),

@@ -8,6 +8,7 @@ import java.lang.ArrayIndexOutOfBoundsException;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import com.parlay.ParlayUtils;
@@ -29,6 +30,22 @@ public class ParlayUtilsTest {
         List<String> testList = Arrays.asList(new String[]{"Hello", "Hello"});
         Pattern pattern = Pattern.compile("wo.*");
         int actual = ParlayUtils.findIndex(testList, 0, pattern);
+    }
+
+    @Test
+    public void splitLineShouldReturnLhsAsHome() {
+        String line = "lhs:rhs";
+        Map<String, String> map = ParlayUtils.splitLine(line, ':');
+        assertEquals(map.get("home"), "lhs");
+        assertEquals(map.get("away"), "rhs");
+    }
+
+    @Test
+    public void splitLineShouldReturnRhsAsHome() {
+        String line = "lhs:rhs";
+        Map<String, String> map = ParlayUtils.splitLine(line, ':');
+        assertEquals(map.get("home"), "rhs");
+        assertEquals(map.get("away"), "lhs");
     }
 
     @Test

@@ -23,7 +23,7 @@ public class RegularCard extends ParlayCard {
             LOGGER.info("Line[" + i + "]: " + lines.get(i));
             LOGGER.info("Line[" + (i + 1) + "]: " + lines.get(i + 1));
 
-            Map<String, String> topLine = splitLine(lines.get(i), ':');
+            Map<String, String> topLine = ParlayUtils.splitLine(lines.get(i), ':');
             String bottomLine = lines.get(i + 1);
             Game game = new Game(ParlayUtils.parseTeam(topLine.get("home")),
                                  ParlayUtils.parseSpread(topLine.get("home")),
