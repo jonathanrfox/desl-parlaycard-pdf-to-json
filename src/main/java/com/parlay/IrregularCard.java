@@ -2,11 +2,11 @@ package com.parlay;
 
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.Map;
 
 import com.parlay.Game;
 import com.parlay.ParlayCard;
 import com.parlay.ParlayUtils;
-import com.parlay.SplitString;
 
 
 class IrregularCard extends ParlayCard {
@@ -20,15 +20,13 @@ class IrregularCard extends ParlayCard {
     public void consume(List<String> lines) {
         for (int i = 0; i < lines.size(); i++) {
             LOGGER.info("Line[" + i + "]: " + lines.get(i));
-            SplitString line = new SplitString(lines.get(i), ':', 1);
 
-            String lhTeam = ParlayUtils.parseTeam(line.getLhs());
-            String lhSpread = ParlayUtils.parseSpread(line.getLhs());
+            Map<String, String> line = splitLine(lines.get(i), ':');
+            Game game = new Game(ParlayUtils.parseTeam(line.get("home")),
+                                 ParlayUtils.parseSpread(line.get("home")),
+                                 ParlayUtils.parseTeam(line.get("away")),
+                                 ParlayUtils.parseSpread(line.get("away")));
 
-            String rhTeam = ParlayUtils.parseTeam(line.getRhs());
-            String rhSpread = ParlayUtils.parseSpread(line.getRhs());
-
-            Game game = new Game(lhTeam, lhSpread, rhTeam, rhSpread);
             LOGGER.info(game.toString());
             addGame(game);
         }

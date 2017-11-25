@@ -1,12 +1,13 @@
 package com.parlay;
 
+import java.lang.Double;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.Map;
 
 import com.parlay.Game;
 import com.parlay.ParlayCard;
 import com.parlay.ParlayUtils;
-import com.parlay.SplitString;
 
 
 public class RegularCard extends ParlayCard {
@@ -22,19 +23,15 @@ public class RegularCard extends ParlayCard {
             LOGGER.info("Line[" + i + "]: " + lines.get(i));
             LOGGER.info("Line[" + (i + 1) + "]: " + lines.get(i + 1));
 
-            SplitString top = new SplitString(lines.get(i), ':', 1);
-            SplitString bottom = new SplitString(lines.get(i + 1), '½', 2);
+            Map<String, String> topLine = splitLine(lines.get(i), ':');
+            String bottomLine = lines.get(i + 1);
+            Game game = new Game(ParlayUtils.parseTeam(topLine.get("home")),
+                                 ParlayUtils.parseSpread(topLine.get("home")),
+                                 ParlayUtils.parseTeam(topLine.get("away")),
+                                 ParlayUtils.parseSpread(topLine.get("away")),
+                                 ParlayUtils.parseOver(bottomLine),
+                                 ParlayUtils.parseUnder(bottomLine));
 
-            String lhTeam = ParlayUtils.parseTeam(top.getLhs());
-            String lhSpread = ParlayUtils.parseSpread(top.getLhs());
-
-            String rhTeam = ParlayUtils.parseTeam(top.getRhs());
-            String rhSpread = ParlayUtils.parseSpread(top.getRhs());
-
-            String over = ParlayUtils.parseOver(bottom.getLhs());
-            String under = ParlayUtils.parseUnder(bottom.getRhs());
-
-            Game game = new Game(lhTeam, lhSpread, rhTeam, rhSpread, over, under);
             LOGGER.info(game.toString());
             addGame(game);
         }

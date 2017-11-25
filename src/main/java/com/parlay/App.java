@@ -16,12 +16,11 @@ import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
-import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 
 import com.parlay.ParlayCard;
 import com.parlay.ParlayCards;
 import com.parlay.ParlayUtils;
+import com.parlay.PDFVisibleTextStripper;
 
 
 public class App {
@@ -58,14 +57,14 @@ public class App {
     public static String getPdfText(String pdfPath) throws IOException {
         File file = new File(pdfPath);
         PDDocument document = null;
-        PDFTextStripper stripper = null;
+        PDFVisibleTextStripper textStripper = null;
         String text = null;
 
         try {
             document = PDDocument.load(file);
-            stripper = new PDFTextStripper();
-            stripper.setEndPage(1);
-            text =  stripper.getText(document);
+            textStripper = new PDFVisibleTextStripper();
+            textStripper.setEndPage(1);
+            text =  textStripper.getText(document);
         } catch (IOException e) {
             throw new IOException("Could not load file and strip text.", e);
         } finally {

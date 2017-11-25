@@ -1,6 +1,7 @@
 package com.parlay;
 
 import java.lang.ArrayIndexOutOfBoundsException;
+import java.lang.Double;
 
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -11,16 +12,16 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import com.parlay.TeamFinder;
-
 
 public class ParlayUtils {
 
-    private static final Pattern START_PATTERN = Pattern.compile(".*DENOTES.*");
-    private static final Pattern END_PATTERN = Pattern.compile(".*(\\d+\\.)|(Parlay\\sPayoffs).*");
-    private static final Pattern LINE_PATTERN = Pattern.compile("^\\s*PRO.*");
-    private static final Pattern TEAM_PATTERN = Pattern.compile("(49)?[A-Z\\s]+");
-    private static final Pattern SPREAD_PATTERN = Pattern.compile("[-+]?\\s\\d*½|[-+]\\s\\d*½?");
+    private static final Pattern START_PATTERN  = Pattern.compile(".*DENOTES.*");
+    private static final Pattern LINE_PATTERN   = Pattern.compile("^\\s*\\d+");
+    private static final Pattern TEAM_PATTERN   = Pattern.compile("(49)?[A-Z]+");
+    private static final Pattern SPREAD_PATTERN = Pattern.compile("[-+]?\\s\\d*½");
+    private static final Pattern OVER_PATTERN   = Pattern.compile("OVER\\s*\\d*½");
+    private static final Pattern UNDER_PATTERN  = Pattern.compile("UNDER\\s*\\d*½");
+
 
     public static int findIndex(List<String> list, int startIdx, Pattern pat) {
         return IntStream.range(startIdx, list.size())
@@ -34,23 +35,12 @@ public class ParlayUtils {
 
         // narrow search space
         int from = findIndex(lines, 0, START_PATTERN);
-        int to = findIndex(lines, from, END_PATTERN);
 
-        // keep only lines that do not match: "\\s*PRO.*"
-        return lines.subList(from + 1, to)
+        // only keep lines that match ` 2 ...`
+        return lines.subList(from + 1, lines.size())
             .stream()
-            .filter(s -> !LINE_PATTERN.matcher(s).find())
+            .filter(s -> LINE_PATTERN.matcher(s).find())
             .collect(Collectors.toList());
-    }
-
-    public static List<String> findAll(String s, Pattern p) {
-        Matcher matcher = p.matcher(s);
-        List<String> found = new ArrayList<>();
-
-        while (matcher.find())
-            found.add(matcher.group());
-
-        return found;
     }
 
     public static String findOne(String s, Pattern p) {
@@ -58,31 +48,28 @@ public class ParlayUtils {
         return matcher.find() ? matcher.group() : null;
     }
 
-    public static String joinAndReplaceWhitespace(List<String> list) {
-        return list.stream()
-            .reduce("", String::concat)
-            .replaceAll("\\s", "");
-    }
-
     public static String parseTeam(String line) {
-        List<String> matches = findAll(line, TEAM_PATTERN);
-        String candidate = joinAndReplaceWhitespace(matches);
-        return TeamFinder.find(candidate);
+        return findOne(line, TEAM_PATTERN);
     }
 
-    public static String parseSpread(String line) {
+    public static Double cleanSpread(String s) {
+        if (s != null)
+            return new Double(s.replaceAll("[^-+\\d]", "") + ".5");
+        return null;
+    }
+
+    public static Double parseSpread(String line) {
         String match = findOne(line, SPREAD_PATTERN);
-        if (match != null)
-            match = match.replaceAll("[\\s½]", "") + ".5";
-        return match;
+        return cleanSpread(match);
     }
 
-    public static String parseOver(String line) {
-        return parseSpread(line);
+    public static Double parseOver(String line) {
+        String match = findOne(line, OVER_PATTERN);
+        return cleanSpread(match);
     }
 
-    public static String parseUnder(String line) {
-        return parseSpread(line);
+    public static Double parseUnder(String line) {
+        String match = findOne(line, UNDER_PATTERN);
+        return cleanSpread(match);
     }
-
 }

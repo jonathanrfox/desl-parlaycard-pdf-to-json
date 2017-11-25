@@ -1,67 +1,65 @@
 package com.parlay;
 
+import java.lang.Double;
+
 
 public class Game {
 
-    private String lhTeam;
-    private String lhSpread;
-    private String rhTeam;
-    private String rhSpread;
-    private String over;
-    private String under;
+    private String homeTeam;
+    private Double homeSpread;
+    private String awayTeam;
+    private Double awaySpread;
+    private Double over;
+    private Double under;
     private String parlayType;
     private int week;
 
     public Game() {
-        this.lhTeam = null;
-        this.lhSpread = null;
-        this.rhTeam = null;
-        this.rhSpread = null;
+        this.homeTeam = null;
+        this.homeSpread = null;
+        this.awayTeam = null;
+        this.awaySpread = null;
+        this.parlayType = null;
         this.over = null;
         this.under = null;
-        this.parlayType = null;
         this.week = -1;
     }
 
-    public Game(String lhTeam, String lhSpread, String rhTeam, String rhSpread) {
+    public Game(String homeTeam, Double homeSpread, String awayTeam, Double awaySpread) {
         this();
-        this.lhTeam = lhTeam;
-        this.lhSpread = lhSpread;
-        this.rhTeam = rhTeam;
-        this.rhSpread = rhSpread;
+        this.homeTeam = homeTeam;
+        this.homeSpread = homeSpread;
+        this.awayTeam = awayTeam;
+        this.awaySpread = awaySpread;
     }
 
-    public Game(String lhTeam, String lhSpread, String rhTeam, String rhSpread, String over, String under) {
-        this();
-        this.lhTeam = lhTeam;
-        this.lhSpread = lhSpread;
-        this.rhTeam = rhTeam;
-        this.rhSpread = rhSpread;
+    public Game(String homeTeam, Double homeSpread, String awayTeam, Double awaySpread, Double over, Double under) {
+        this(homeTeam, homeSpread, awayTeam, awaySpread);
         this.over = over;
         this.under = under;
     }
 
-    public void setLhTeam(String lhTeam) {
-        this.lhTeam = lhTeam;
+    public void setHomeTeam(String homeTeam) {
+        this.homeTeam = homeTeam;
     }
 
-    public void setLhSpread(String lhSpread) {
-        this.lhSpread = lhSpread;
+    public void setHomeSpread(Double homeSpread) {
+        this.homeSpread = homeSpread;
     }
 
-    public void setRhTeam(String rhTeam) {
-        this.rhTeam = rhTeam ;
+    public void setAwayTeam(String awayTeam) {
+        this.awayTeam = awayTeam;
     }
 
-    public void setRhSpread(String rhSpread) {
-        this.rhSpread = rhSpread;
+    public void setAwaySpread(Double awaySpread) {
+        this.awaySpread = awaySpread;
     }
 
-    public void setOver(String over) {
+    public void setOver(Double over) {
         this.over = over;
     }
 
-    public void setUnder(String under) {
+    public void setUnder(Double under) {
         this.under = under;
     }
 
@@ -75,28 +73,28 @@ public class Game {
 
     public String toString() {
         return ""
-            + this.lhTeam + ", "
-            + this.lhSpread + ", "
-            + this.rhTeam + ", "
-            + this.rhSpread + ", "
+            + this.homeTeam + ", "
+            + this.homeSpread + ", "
+            + this.awayTeam + ", "
+            + this.awaySpread + ", "
             + this.over + ", "
             + this.under + ", "
             + this.week;
     }
 
-    private boolean stringsEqual(String s, String o) {
-        return s == o || s.equals(o);
-    }
+    // private boolean stringsEqual(String s, String o) {
+    //     return s == o || s.equals(o);
+    // }
 
     public boolean equals(Game other) {
         return
-            stringEquals(this.lhTeam, other.lhTeam) &&
-            stringEquals(this.lhSpread, other.lhSpread) &&
-            stringEquals(this.rhTeam, other.rhTeam) &&
-            stringEquals(this.rhSpread, other.rhSpread) &&
-            stringEquals(this.over, other.over) &&
-            stringEquals(this.under, other.under) &&
-            stringEquals(this.parlayType, other.parlayType) &&
+            this.homeTeam.equals(other.homeTeam) &&
+            this.awayTeam.equals(other.awayTeam) &&
+            this.parlayType.equals(other.parlayType) &&
+            this.homeSpread == other.homeSpread &&
+            this.awaySpread == other.awaySpread &&
+            this.over == other.over &&
+            this.under == other.under &&
             this.week == other.week;
     }
 }
