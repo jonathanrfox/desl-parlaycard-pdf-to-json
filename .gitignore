@@ -3,6 +3,7 @@
 !build.gradle
 !run.sh
 !test.sh
+!dist.sh
 !logging.properties
 !test.logging.properties
 !/src*

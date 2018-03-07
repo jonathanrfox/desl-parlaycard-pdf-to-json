@@ -22,13 +22,15 @@ class IrregularCard extends ParlayCard {
             LOGGER.info("Line[" + i + "]: " + lines.get(i));
 
             Map<String, String> line = ParlayUtils.splitLine(lines.get(i), ':');
-            Game game = new Game(ParlayUtils.parseTeam(line.get("home")),
-                                 ParlayUtils.parseSpread(line.get("home")),
-                                 ParlayUtils.parseTeam(line.get("away")),
-                                 ParlayUtils.parseSpread(line.get("away")));
+
+            Game game = new Game();
+            game.setHomeTeam(ParlayUtils.parseTeam(line.get("home")));
+            game.setHomeSpread(ParlayUtils.parseSpread(line.get("home")));
+            game.setAwayTeam(ParlayUtils.parseTeam(line.get("away")));
+            game.setAwaySpread(ParlayUtils.parseSpread(line.get("away")));
 
             LOGGER.info(game.toString());
-            addGame(game);
+            super.addGame(game);
         }
     }
 }

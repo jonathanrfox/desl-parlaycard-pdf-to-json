@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 public class ParlayUtils {
 
     private static final Pattern START_PATTERN  = Pattern.compile(".*DENOTES.*");
-    private static final Pattern LINE_PATTERN   = Pattern.compile("^\\s*\\d+");
+    private static final Pattern LINE_PATTERN   = Pattern.compile("^\\s*\\d+\\s+[49A-Z]+");
     private static final Pattern TEAM_PATTERN   = Pattern.compile("(49)?[A-Z]+");
     private static final Pattern SPREAD_PATTERN = Pattern.compile("[-+]?\\s\\d*½");
     private static final Pattern OVER_PATTERN   = Pattern.compile("OVER\\s*\\d*½");

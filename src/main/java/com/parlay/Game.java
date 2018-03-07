@@ -81,20 +81,4 @@ public class Game {
             + this.under + ", "
             + this.week;
     }
-
-    // private boolean stringsEqual(String s, String o) {
-    //     return s == o || s.equals(o);
-    // }
-
-    public boolean equals(Game other) {
-        return
-            this.homeTeam.equals(other.homeTeam) &&
-            this.awayTeam.equals(other.awayTeam) &&
-            this.parlayType.equals(other.parlayType) &&
-            this.homeSpread == other.homeSpread &&
-            this.awaySpread == other.awaySpread &&
-            this.over == other.over &&
-            this.under == other.under &&
-            this.week == other.week;
-    }
 }

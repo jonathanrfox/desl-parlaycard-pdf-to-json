@@ -20,7 +20,8 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import com.parlay.ParlayCard;
 import com.parlay.ParlayCards;
 import com.parlay.ParlayUtils;
-import com.parlay.PDFVisibleTextStripper;
+
+import com.extensions.PDFVisibleTextStripper;
 
 
 public class App {
@@ -103,7 +104,6 @@ public class App {
         parlay.setWeek(namespace.get("week"));
         parlay.consume(lines);
 
-        // output the result as a json object to console
         Gson gson = new Gson();
         String json = gson.toJson(parlay.getGames());
         System.out.println(json);

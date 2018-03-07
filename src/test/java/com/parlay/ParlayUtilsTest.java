@@ -53,11 +53,11 @@ public class ParlayUtilsTest {
         String testText = ""
             + " DENOTES HOME TEAM \n"
             + " PRO \n"
-            + " 1 abc\n"
+            + " 1 ABC\n"
             + " PRO \n"
-            + " 2 def\n";
+            + " 2 DEF\n";
         List<String> actual = ParlayUtils.clean(testText);
-        List<String> expected = Arrays.asList(new String[]{" 1 abc", " 2 def"});
+        List<String> expected = Arrays.asList(new String[]{" 1 ABC", " 2 DEF"});
         assertThat(actual, is(expected));
     }
 

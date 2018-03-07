@@ -25,15 +25,15 @@ public class RegularCard extends ParlayCard {
 
             Map<String, String> topLine = ParlayUtils.splitLine(lines.get(i), ':');
             String bottomLine = lines.get(i + 1);
-            Game game = new Game(ParlayUtils.parseTeam(topLine.get("home")),
-                                 ParlayUtils.parseSpread(topLine.get("home")),
-                                 ParlayUtils.parseTeam(topLine.get("away")),
-                                 ParlayUtils.parseSpread(topLine.get("away")),
-                                 ParlayUtils.parseOver(bottomLine),
-                                 ParlayUtils.parseUnder(bottomLine));
-
+            Game game = new Game();
+            game.setHomeTeam(ParlayUtils.parseTeam(topLine.get("home")));
+            game.setHomeSpread(ParlayUtils.parseSpread(topLine.get("home")));
+            game.setAwayTeam(ParlayUtils.parseTeam(topLine.get("away")));
+            game.setAwaySpread(ParlayUtils.parseSpread(topLine.get("away")));
+            game.setOver(ParlayUtils.parseOver(bottomLine));
+            game.setUnder(ParlayUtils.parseUnder(bottomLine));
             LOGGER.info(game.toString());
-            addGame(game);
+            super.addGame(game);
         }
     }
 }

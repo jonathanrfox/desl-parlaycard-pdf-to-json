@@ -1,4 +1,4 @@
-package com.parlay;
+package com.extensions;
 
 import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;
@@ -19,8 +19,6 @@ import org.apache.pdfbox.text.TextPosition;
 import org.apache.pdfbox.util.Matrix;
 import org.apache.pdfbox.util.Vector;
 
-
-// https://github.com/mkl-public/testarea-pdfbox2/blob/master/src/main/java/mkl/testarea/pdfbox2/extract/PDFVisibleTextStripper.java
 
 public class PDFVisibleTextStripper extends PDFTextStripper {
 
