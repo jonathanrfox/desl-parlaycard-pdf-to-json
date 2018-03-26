@@ -1,4 +1,4 @@
-Special thanks to @mkl-public for providing the code to remove invisble text from pdf. This code resides [here](https://github.com/jrusty/desl-parlaycard-pdf-to-json/src/main/java/com/extensions/PDFVisibleTextStripper.java).
+Special thanks to @mkl-public for providing the code to remove invisble text from pdf. This code resides [here](https://github.com/jrusty/desl-parlaycard-pdf-to-json/src/main/java/extensions/PDFVisibleTextStripper.java).
 
 Links:
 - [Stackoverflow question](https://stackoverflow.com/questions/47358127/remove-invisible-text-from-pdf-using-pdfbox)
