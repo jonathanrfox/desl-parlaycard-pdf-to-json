@@ -1,5 +1,6 @@
 /*
 !.gitignore
+!CREDITS.md
 !build.gradle
 !run.sh
 !test.sh
