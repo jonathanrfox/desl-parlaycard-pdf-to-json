@@ -1,17 +1,13 @@
-package com.parlay;
+package parlay;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
-import java.lang.ArrayIndexOutOfBoundsException;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-
-import com.parlay.ParlayUtils;
 
 
 public class ParlayUtilsTest {

@@ -1,11 +1,9 @@
-package com.parlay;
+package parlay;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.parlay.Game;
 
 
 abstract class ParlayCard {
@@ -32,6 +30,12 @@ abstract class ParlayCard {
         game.setWeek(this.week);
         game.setParlayType(this.parlayType);
         this.games.add(game);
+    }
+
+    public static ParlayCard create(String parlayType) {
+        return parlayType.equals("rev")
+            ? new IrregularCard(parlayType)
+            : new RegularCard(parlayType);
     }
 
     public abstract void consume(List<String> lines);

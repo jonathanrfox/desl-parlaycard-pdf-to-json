@@ -1,12 +1,8 @@
-package com.parlay;
+package parlay;
 
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.Map;
-
-import com.parlay.Game;
-import com.parlay.ParlayCard;
-import com.parlay.ParlayUtils;
 
 
 class IrregularCard extends ParlayCard {

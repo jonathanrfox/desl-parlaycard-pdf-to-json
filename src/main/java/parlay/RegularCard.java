@@ -1,13 +1,9 @@
-package com.parlay;
+package parlay;
 
 import java.lang.Double;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.Map;
-
-import com.parlay.Game;
-import com.parlay.ParlayCard;
-import com.parlay.ParlayUtils;
 
 
 public class RegularCard extends ParlayCard {

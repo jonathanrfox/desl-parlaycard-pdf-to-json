@@ -1,4 +1,4 @@
-package com.extensions;
+package extensions;
 
 import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;

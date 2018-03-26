@@ -1,27 +1,22 @@
-package com.parlay;
+package parlay;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.lang.Class;
 import java.util.Arrays;
 import java.util.List;
 
-import com.parlay.ParlayCards;
-import com.parlay.RegularCard;
-import com.parlay.IrregularCard;
-
 
 @RunWith(Parameterized.class)
-public class ParlayCardsTest {
+public class ParlayCardTest {
 
     private Class actualClass;
     private Class expectedClass;
 
-    public ParlayCardsTest(String parlayType, Class expectedClass) {
-        this.actualClass = ParlayCards.get(parlayType).getClass();
+    public ParlayCardTest(String parlayType, Class expectedClass) {
+        this.actualClass = ParlayCard.create(parlayType).getClass();
         this.expectedClass = expectedClass;
     }
 

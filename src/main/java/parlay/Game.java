@@ -1,6 +1,4 @@
-package com.parlay;
-
-import java.lang.Double;
+package parlay;
 
 
 public class Game {

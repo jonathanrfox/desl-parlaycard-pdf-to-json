@@ -1,4 +1,4 @@
-package com.parlay;
+package parlay;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,19 +17,14 @@ import net.sourceforge.argparse4j.inf.Namespace;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 
-import com.parlay.ParlayCard;
-import com.parlay.ParlayCards;
-import com.parlay.ParlayUtils;
-
-import com.extensions.PDFVisibleTextStripper;
+import extensions.PDFVisibleTextStripper;
 
 
 public class App {
 
     private static Logger LOGGER = Logger.getLogger(App.class.getName());
-    private static Namespace namespace;
 
-    private static void initArgParser(String[] args) {
+    private static Namespace parseArgs(String[] args) {
         ArgumentParser parser = ArgumentParsers
             .newArgumentParser("ParlayParser")
             .defaultHelp(true)
@@ -47,65 +42,48 @@ public class App {
             .type(Integer.class)
             .choices(Arguments.range(1, 18));
 
+        Namespace namespace = null;
         try {
             namespace = parser.parseArgs(args);
         } catch (ArgumentParserException e) {
-            LOGGER.log(Level.SEVERE, "Couldn't parse args", e);
+            LOGGER.log(Level.SEVERE, "Could not parse arguments.", e);
             System.exit(1);
         }
+        return namespace;
     }
 
-    public static String getPdfText(String pdfPath) throws IOException {
+    private static String getPdfText(String pdfPath) {
         File file = new File(pdfPath);
-        PDDocument document = null;
-        PDFVisibleTextStripper textStripper = null;
-        String text = null;
+        String pdfText = null;
 
-        try {
-            document = PDDocument.load(file);
-            textStripper = new PDFVisibleTextStripper();
-            textStripper.setEndPage(1);
-            text =  textStripper.getText(document);
+        try (PDDocument document = PDDocument.load(file)) {
+            PDFVisibleTextStripper stripper = new PDFVisibleTextStripper();
+            stripper.setEndPage(1);
+            pdfText = stripper.getText(document);
         } catch (IOException e) {
-            throw new IOException("Could not load file and strip text.", e);
-        } finally {
-            try {
-                if (document != null)
-                    document.close();
-            } catch (IOException e) {
-                LOGGER.log(Level.WARNING, "Could not close document", e);
-            }
+            LOGGER.log(Level.SEVERE, "Could not load PDF.", e);
+            System.exit(1);
         }
-
-        return text;
+        return pdfText;
     }
 
     public static void main(String[] args) {
-        initArgParser(args);
-
+        Namespace namespace = parseArgs(args);
         LOGGER.info("Arguments supplied:\n"
             + "\tpdf: " + namespace.get("pdf") + "\n"
             + "\tpdfType: " + namespace.get("pdftype") + "\n"
             + "\tweek: " + namespace.get("week"));
 
-        String text = null;
+        String pdfText = getPdfText(namespace.get("pdf"));
+        LOGGER.info("Text returned from pdf:\n" + pdfText);
 
-        try {
-            text = getPdfText(namespace.get("pdf"));
-        } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Couldn't get pdf text", e);
-            System.exit(1);
-        }
-
-        LOGGER.info("Text returned from pdf:\n" + text);
-
-        List<String> lines = ParlayUtils.clean(text);
-        ParlayCard parlay = ParlayCards.get(namespace.get("pdftype"));
+        List<String> lines = ParlayUtils.clean(pdfText);
+        ParlayCard parlay = ParlayCard.create(namespace.get("pdftype"));
         parlay.setWeek(namespace.get("week"));
         parlay.consume(lines);
 
         Gson gson = new Gson();
         String json = gson.toJson(parlay.getGames());
-        System.out.println(json);
+        System.out.print(json);
     }
 }

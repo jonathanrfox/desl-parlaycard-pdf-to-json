@@ -1,4 +1,4 @@
-package com.parlay;
+package parlay;
 
 import java.lang.ArrayIndexOutOfBoundsException;
 import java.lang.Double;
