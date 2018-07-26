@@ -1,0 +1,182 @@
+#+TITLE: DESL Parlaycard PDF to JSON
+
+This commandline java application converts Delaware Sports Lottery Parlaycards from PDF to JSON.
+
+* Usage
+There is one-liner shell script named =run.sh= in the root directory
+that takes 3 parameters. The first is the path to the pdf. The second
+is the type of parlay (std: Standard, tsr: Teaser, sup: Super Teaser,
+rev: Reverse Teaser). The third is the week number for the current
+season.
+
+* Example
+
+#+BEGIN_SRC sh :results code replace
+./run.sh pdfs/09072016/HalfPt09072016.pdf std 1 | python -m json.tool
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC js
+[
+    {
+        "homeTeam": "BRONCOS",
+        "homeSpread": 3.5,
+        "awayTeam": "PANTHERS",
+        "awaySpread": -3.5,
+        "over": 41.5,
+        "under": 41.5,
+        "parlayType": "std",
+        "week": 1
+    },
+    {
+        "homeTeam": "FALCONS",
+        "homeSpread": -2.5,
+        "awayTeam": "BUCCANEERS",
+        "awaySpread": 2.5,
+        "over": 47.5,
+        "under": 47.5,
+        "parlayType": "std",
+        "week": 1
+    },
+    {
+        "homeTeam": "TITANS",
+        "homeSpread": 2.5,
+        "awayTeam": "VIKINGS",
+        "awaySpread": -2.5,
+        "over": 41.5,
+        "under": 41.5,
+        "parlayType": "std",
+        "week": 1
+    },
+    {
+        "homeTeam": "EAGLES",
+        "homeSpread": -4.5,
+        "awayTeam": "BROWNS",
+        "awaySpread": 4.5,
+        "over": 41.5,
+        "under": 41.5,
+        "parlayType": "std",
+        "week": 1
+    },
+    {
+        "homeTeam": "JETS",
+        "homeSpread": 2.5,
+        "awayTeam": "BENGALS",
+        "awaySpread": -2.5,
+        "over": 41.5,
+        "under": 41.5,
+        "parlayType": "std",
+        "week": 1
+    },
+    {
+        "homeTeam": "SAINTS",
+        "homeSpread": -0.5,
+        "awayTeam": "RAIDERS",
+        "awaySpread": 0.5,
+        "over": 51.5,
+        "under": 51.5,
+        "parlayType": "std",
+        "week": 1
+    },
+    {
+        "homeTeam": "CHIEFS",
+        "homeSpread": -7.5,
+        "awayTeam": "CHARGERS",
+        "awaySpread": 7.5,
+        "over": 44.5,
+        "under": 44.5,
+        "parlayType": "std",
+        "week": 1
+    },
+    {
+        "homeTeam": "RAVENS",
+        "homeSpread": -3.5,
+        "awayTeam": "BILLS",
+        "awaySpread": 3.5,
+        "over": 44.5,
+        "under": 44.5,
+        "parlayType": "std",
+        "week": 1
+    },
+    {
+        "homeTeam": "TEXANS",
+        "homeSpread": -6.5,
+        "awayTeam": "BEARS",
+        "awaySpread": 6.5,
+        "over": 44.5,
+        "under": 44.5,
+        "parlayType": "std",
+        "week": 1
+    },
+    {
+        "homeTeam": "JAGUARS",
+        "homeSpread": 5.5,
+        "awayTeam": "PACKERS",
+        "awaySpread": -5.5,
+        "over": 48.5,
+        "under": 48.5,
+        "parlayType": "std",
+        "week": 1
+    },
+    {
+        "homeTeam": "SEAHAWKS",
+        "homeSpread": -10.5,
+        "awayTeam": "DOLPHINS",
+        "awaySpread": 10.5,
+        "over": 43.5,
+        "under": 43.5,
+        "parlayType": "std",
+        "week": 1
+    },
+    {
+        "homeTeam": "COWBOYS",
+        "homeSpread": -0.5,
+        "awayTeam": "GIANTS",
+        "awaySpread": 0.5,
+        "over": 46.5,
+        "under": 46.5,
+        "parlayType": "std",
+        "week": 1
+    },
+    {
+        "homeTeam": "COLTS",
+        "homeSpread": -3.5,
+        "awayTeam": "LIONS",
+        "awaySpread": 3.5,
+        "over": 50.5,
+        "under": 50.5,
+        "parlayType": "std",
+        "week": 1
+    },
+    {
+        "homeTeam": "CARDINALS",
+        "homeSpread": -6.5,
+        "awayTeam": "PATRIOTS",
+        "awaySpread": 6.5,
+        "over": 47.5,
+        "under": 47.5,
+        "parlayType": "std",
+        "week": 1
+    },
+    {
+        "homeTeam": "REDSKINS",
+        "homeSpread": 3.5,
+        "awayTeam": "STEELERS",
+        "awaySpread": -3.5,
+        "over": 50.5,
+        "under": 50.5,
+        "parlayType": "std",
+        "week": 1
+    },
+    {
+        "homeTeam": "49ERS",
+        "homeSpread": 2.5,
+        "awayTeam": "RAMS",
+        "awaySpread": -2.5,
+        "over": 44.5,
+        "under": 44.5,
+        "parlayType": "std",
+        "week": 1
+    }
+]
+#+END_SRC
