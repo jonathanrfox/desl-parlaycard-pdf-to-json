@@ -11,7 +11,7 @@ season.
 
 * Example
 
-#+BEGIN_SRC sh :results code replace
+#+BEGIN_SRC sh :results code replace :exports both
 ./run.sh pdfs/09072016/HalfPt09072016.pdf std 1 | python -m json.tool
 #+END_SRC
 
